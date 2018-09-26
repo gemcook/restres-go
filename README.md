@@ -28,7 +28,11 @@ dep ensure -add "github.com/gemcook/restres-go/erres"
     さらに、`string`, `error`, `fmt.Stringer`に限らず、どのような型も渡すことが出来ます。
 
     ```go
-    res := erres.New("Unexpected", erres.ErrorUnknown, "something wrong", errors.New("segmentation fault"), errorObject{123})
+    res := erres.New("Unexpected", erres.ErrorUnknown,
+        "something wrong",
+        errors.New("segmentation fault"),
+        errorObject{123},
+        )
     ```
 
 3. エラーを複数渡すことも出来ます。
