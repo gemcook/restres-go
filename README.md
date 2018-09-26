@@ -41,3 +41,31 @@ dep ensure -add "github.com/gemcook/restres-go/erres"
     res := erres.New("Unexpected", erres.ErrorUnknown, "something wrong")
     res.Append("NetworkChanged", erres.ErrorUnknown, "network change detected")
     ```
+
+## JSON変換例
+
+`res` は次のような定義です。
+
+```go
+res := erres.New("Unexpected", erres.ErrorUnknown,
+    "something wrong",
+    errors.New("segmentation fault"),
+)
+```
+
+`res` はJSONに変換すると、以下のようになります。
+
+```json
+{
+  "errors": [
+    {
+      "code": "Unexpected",
+      "type": "UnknownError",
+      "messages": [
+        "something wrong",
+        "segmentation fault"
+      ]
+    }
+  ]
+}
+```

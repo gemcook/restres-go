@@ -1,6 +1,7 @@
 package erres_test
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"testing"
@@ -56,4 +57,29 @@ func TestErrorResponse(t *testing.T) {
 
 	assert.Equal("network change detected", messages[0])
 	assert.Equal("999", messages[1])
+}
+
+func ExampleNew_with3Messages() {
+	res := erres.New("Unexpected", erres.ErrorUnknown,
+		"something wrong",
+		errors.New("segmentation fault"),
+		errorObject{123},
+	)
+
+	b, _ := json.MarshalIndent(res, "", "  ")
+	fmt.Println(string(b))
+	// Output:
+	// {
+	//   "errors": [
+	//     {
+	//       "code": "Unexpected",
+	//       "type": "UnknownError",
+	//       "messages": [
+	//         "something wrong",
+	//         "segmentation fault",
+	//         "error value is 123"
+	//       ]
+	//     }
+	//   ]
+	// }
 }
